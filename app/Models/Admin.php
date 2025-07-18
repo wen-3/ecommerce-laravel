@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class Admin extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
@@ -21,13 +21,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'address',
-        'city',
-        'zip_code',
-        'country',
-        'phone_number',
-        'profile_image',
-        'profile_completed'
     ];
 
     /**
@@ -51,19 +44,5 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
-    }
-
-    public function orders()
-    {
-        return $this->hasMany(Order::class)->with('products')->latest();
-    }
-
-    public function getImagePathAttribute()
-    {
-        if ($this->profile_image) {
-            return asset('storage/images/users/' . $this->profile_image);
-        } else {
-            return 'https://cdn.pixabay.com/photo/2017/11/10/05/48/user-2935527_1280.png';
-        }
     }
 }
